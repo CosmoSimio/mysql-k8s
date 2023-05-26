@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  namespace: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      volumes:
+        - name: mysql-pvc
+          persistentVolumeClaim:
+            claimName: efs-pvclaim-mysql
+      containers:
+      - name: mysql
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: Password123
+        volumeMounts:
+        - name: mysql-pvc
+          mountPath: /var/lib/mysql
+        resources:
+          requests:
+            memory: "4Gi"
