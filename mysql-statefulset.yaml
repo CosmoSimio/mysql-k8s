@@ -17,18 +17,24 @@ spec:
       volumes:
         - name: mysql-pvc
           persistentVolumeClaim:
-            claimName: efs-pvclaim-mysql
+            claimName: efs-pvc-mysql
       containers:
       - name: mysql
         image: mysql:latest
         ports:
         - containerPort: 3306
+          name: db-port
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: Password123
         volumeMounts:
         - name: mysql-pvc
           mountPath: /var/lib/mysql
+          subPath: data
         resources:
           requests:
             memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "8Gi"
+            cpu: "4"

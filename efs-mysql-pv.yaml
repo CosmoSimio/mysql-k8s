@@ -13,18 +13,3 @@ spec:
   csi:
     driver: efs.csi.aws.com
     volumeHandle: fs-01df005278c16e48f
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: efs-pvc-mysql
-  namespace: mysql
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: efs-sc
