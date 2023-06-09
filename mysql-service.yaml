@@ -3,10 +3,12 @@ kind: Service
 metadata:
   name: mysql-service
   namespace: mysql
+  labels:
+    app: mysql
 spec:
   selector:
     app: mysql
-  type: LoadBalancer
+  type: NodePort
   ports:
     - protocol: TCP
       port: 3306
